@@ -5,6 +5,7 @@ pipeline {
         stage('Hello hii') {
             steps {
                 echo 'Hello iiihi'
+                kdjvbiqdchbqhkewf
             }
         }
     }
