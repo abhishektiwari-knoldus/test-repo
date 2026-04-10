@@ -1,0 +1,26 @@
+name: Rotate GHCR imagePullSecrets in GKE
+
+on:
+  workflow_dispatch:
+    inputs:
+      namespaces:
+        description: "Enter Comma-separated namespaces (REQUIRED) E.g. :- knolx,radar,techhub"
+        required: true
+jobs:
+  rotate-secret:
+    name: Rotate GHCR imagePullSecrets in GKE
+    # if: ${{ github.ref == 'refs/heads/master' && github.actor == 'abhishektiwari-knoldus' }}
+    if: ${{ github.actor == 'abhishektiwari-knoldus' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup kubectl
+        uses: azure/setup-kubectl@v4
+
+      - name: Prepare namespace list
+        run: |
+          echo "${{ inputs.namespaces }}" | tr ',' ' ' > ns.txt
+          echo "Namespaces to update:"
+          cat ns.txt
